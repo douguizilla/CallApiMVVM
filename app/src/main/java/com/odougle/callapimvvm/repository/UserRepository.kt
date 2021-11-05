@@ -5,6 +5,7 @@ import com.odougle.callapimvvm.network.ApiInterface
 import com.odougle.callapimvvm.utils.Resource
 import javax.inject.Inject
 
+
 class UserRepository @Inject constructor(
     private val apiInterface: ApiInterface
 ){
