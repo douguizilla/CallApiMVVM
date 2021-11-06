@@ -3,9 +3,10 @@ package com.odougle.callapimvvm.repository
 import com.odougle.callapimvvm.model.UserResponse
 import com.odougle.callapimvvm.network.ApiInterface
 import com.odougle.callapimvvm.utils.Resource
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-
+@ActivityScoped
 class UserRepository @Inject constructor(
     private val apiInterface: ApiInterface
 ){
