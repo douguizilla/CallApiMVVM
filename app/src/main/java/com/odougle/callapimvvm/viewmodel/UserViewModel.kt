@@ -12,11 +12,16 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel(){
-    var isLoaling = mutableStateOf(false)
+    var isLoading = mutableStateOf(false)
     private var _getUserData: MutableLiveData<List<UserResponse>> = MutableLiveData<List<UserResponse>>()
     var getUserData: LiveData<List<UserResponse>> = _getUserData
 
     suspend fun getUserData() : Resource<List<UserResponse>>{
-
+        val result = userRepository.getUserResponse()
+        if(result is Resource.Sucess){
+            isLoading.value = true
+            _getUserData.value = result.data!!
+        }
+        return result
     }
 }
