@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.odougle.callapimvvm.model.UserResponse
 import com.odougle.callapimvvm.repository.UserRepository
 import com.odougle.callapimvvm.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel(){
