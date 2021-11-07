@@ -23,9 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.odougle.callapimvvm.model.UserResponse
 import com.odougle.callapimvvm.ui.theme.CallApiMVVMTheme
 import com.odougle.callapimvvm.ui.theme.Purple500
 import com.odougle.callapimvvm.utils.Resource
+import com.odougle.callapimvvm.view.UserListItem
 import com.odougle.callapimvvm.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
