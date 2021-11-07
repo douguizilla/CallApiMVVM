@@ -5,10 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -29,8 +26,11 @@ import com.odougle.callapimvvm.ui.theme.Purple500
 import com.odougle.callapimvvm.utils.Resource
 import com.odougle.callapimvvm.view.UserListItem
 import com.odougle.callapimvvm.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +42,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun CallApi(
     viewModel: UserViewModel = hiltViewModel()
@@ -70,12 +71,12 @@ fun CallApi(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .background(Purple500)
                         .padding(15.dp)
                 ) {
                     Text(
-                        text = "User live Data",
+                        text = "User Live Data",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                         color = Color.White
@@ -83,16 +84,17 @@ fun CallApi(
                 }
 
                 scope.launch {
-                    val result =  viewModel.getUserData()
-                    if(result is Resource.Sucess){
-                        Toast.makeText(context, "Fetching data success", Toast.LENGTH_SHORT).show()
+                    val result = viewModel.getUserData()
 
-                    }else if(result is Resource.Error){
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    if (result is Resource.Success) {
+                        Toast.makeText(context, "Fetching data success!", Toast.LENGTH_SHORT).show()
+                    } else if (result is Resource.Error) {
+                        Toast.makeText(context, "Error: ${result}", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
-                if(!viewModel.isLoading.value){
+                if (!viewModel.isLoading.value) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
@@ -102,26 +104,18 @@ fun CallApi(
                     }
                 }
 
-                if(viewModel.getUserData.value!!.isNotEmpty()){
-                    LazyColumn(
-                        modifier = Modifier.padding(10.dp)
-                    ){
-                        items(getAllUserData.value!!.size){ index ->
-                            UserListItem(getAllUserData.value!![index])
+                if (viewModel.isLoading.value) {
+                    if (viewModel.getUserData.value!!.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            items(getAllUserData.value!!.size) { index ->
+                                UserListItem(getAllUserData.value!![index])
+                            }
                         }
                     }
                 }
             }
-
-
         }
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    CallApiMVVMTheme {
-        CallApi()
     }
 }

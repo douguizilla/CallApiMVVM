@@ -20,7 +20,7 @@ class UserViewModel @Inject constructor(
 
     suspend fun getUserData() : Resource<List<UserResponse>>{
         val result = userRepository.getUserResponse()
-        if(result is Resource.Sucess){
+        if(result is Resource.Success){
             isLoading.value = true
             _getUserData.value = result.data!!
         }

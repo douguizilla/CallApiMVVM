@@ -16,6 +16,6 @@ class UserRepository @Inject constructor(
         }catch (e: Exception){
             return Resource.Error("An unkown error occurred: ${e.localizedMessage}")
         }
-        return Resource.Sucess(response)
+        return Resource.Success(response)
     }
 }
